@@ -10,6 +10,9 @@ from Bio.SeqRecord import SeqRecord
 from Bio.PDB import PDBParser, MMCIFParser
 import py3Dmol
 from collections import Counter
+import os
+
+here = os.path.dirname(os.path.abspath(__file__))
 
 dna_seq = Seq('ATGATCTCGTAA')
 
@@ -170,16 +173,19 @@ dna2 = Seq('ATTATGTCGTAA')
 #     print(record)
 
 # Reading FASTA
-dna_record = SeqIO.read("sequence.fasta", "fasta")
+filename = os.path.join(here, 'sequence.fasta')
+dna_record = SeqIO.read(filename, "fasta")
 dna_seq = dna_record.seq
 
 # Reading Genbank
-gb_dna_record = SeqIO.parse("sequence.gb", "genbank")
+filename = os.path.join(here, 'sequence.gb')
+gb_dna_record = SeqIO.parse(filename, "genbank")
     
 
 # Working with 3D structures
 parser = PDBParser()
-structure = parser.get_structure('6LU7', "6lu7.pdb")
+filename = os.path.join(here, '6lu7.pdb')
+structure = parser.get_structure('6LU7', filename)
 model = structure[0]
 
 # structure => model => chain => residue => atom
@@ -209,3 +215,4 @@ view.setStyle({'stick':{}})
 # Display the viewer
 view.show()
 # not displaying
+
